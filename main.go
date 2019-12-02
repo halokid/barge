@@ -14,7 +14,7 @@
 
 package main
 
-import "github.com/benovermyer/barge/cmd"
+import "github.com/halokid/barge/cmd"
 
 func main() {
 	cmd.Execute()
