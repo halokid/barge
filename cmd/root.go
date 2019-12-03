@@ -77,10 +77,11 @@ func initConfig() {
 		viper.SetConfigName(".barge")
 	}
 
+	// 假如环境变量已经设置了变量的话， 就读取环境变量
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
+		fmt.Println("读取配置文件:", viper.ConfigFileUsed())
 	}
 }

@@ -16,6 +16,7 @@ type Container struct {
 
 
 func (p Portainer) getContainersForEndpoint(endpoint Endpoint) []Container {
+	// 获取endpoint的容器信息
 	output := p.fetch("endpoints/" + strconv.Itoa(endpoint.ID) + "/docker/containers/json")
 
 	containers := make([]Container, 0)
@@ -40,7 +41,7 @@ func (p Portainer) populateContainersForEndpoints(endpoints []Endpoint) []Endpoi
 }
 
 func printContainersForEndpoint(endpoint Endpoint) {
-	fmt.Println("Containers in " + endpoint.Name)
+	fmt.Println(endpoint.Name, "容器列表")
 	fmt.Println("----")
 
 	for _, c := range endpoint.Containers {
