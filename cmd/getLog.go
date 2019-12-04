@@ -15,32 +15,30 @@
 package cmd
 
 import (
-	"github.com/spf13/viper"
+	"fmt"
+	"github.com/spf13/cobra"
+	"os"
 )
 
-// Portainer is an instance of Portainer
-type Portainer struct {
-	URL       string
-	username  string
-	password  string
-	token     string
-	verbose   bool
-	Endpoints []Endpoint
+// listContainersCmd represents the listContainers command
+var getLogCmd = &cobra.Command{
+	Use:   "get",
+	Short: "获取容器日志",
+	Long:  `获取容器日志---`,
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) == 0 {
+			logx.DebugPrint("需要endpoint id 和 容器id, ./tinyRabbit log get <eid> <cid>")
+			os.Exit(404)
+		}
+		fmt.Println(args)
+		eId, cId  := args[0], args[1]
+		printLog(eId, cId)
+	},
 }
 
-// NewPortainer returns a new Portainer instance
-func NewPortainer() Portainer {
-	// 从配置文件读取这些参数
-	url := viper.GetString("portainer_url") + "/api"
-	username := viper.GetString("portainer_username")
-	password := viper.GetString("portainer_password")
-
-	portainer := Portainer{
-		URL: url,
-		username: username,
-		password: password,
-	}
-	portainer.token = portainer.login()
-
-	return portainer
+func init() {
+	logCmd.AddCommand(getLogCmd)
 }
+
+
+

@@ -18,17 +18,25 @@ import (
 	"fmt"
 	"os"
 
-	homedir "github.com/mitchellh/go-homedir"
+	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+
+	. "github.com/halokid/ColorfulRabbit"
 )
+
+
+var logx = Logx {
+	DebugFlag: true,
+	LogFlFlag: false,
+}
 
 var cfgFile string
 var endpointID int
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "barge",
+	Use:   "tinyRabbit",
 	Short: "The missing Portainer CLI",
 	Long:  `barge lets you manage multiple Docker Swarms through Portainer's API.`,
 	// Uncomment the following line if your bare application
