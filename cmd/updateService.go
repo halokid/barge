@@ -47,7 +47,7 @@ var updateServiceCmd = &cobra.Command{
 				if s.ID == args[0] || s.Spec.Name == args[0] {
 					fmt.Println("Updating service " + s.Spec.Name + "...")
 					path = "/services/" + s.ID + "/?version=" + strconv.Itoa(s.Version.Index)
-					portainer.post(data, path)
+					portainer.Post(data, path)
 				}
 			}
 		}

@@ -6,4 +6,6 @@
 # 0.1.0
 
 * improve container data list
-* finished container log display
+* done container log display
+* done pull image
+* done container create

@@ -31,7 +31,10 @@ type Portainer struct {
 // NewPortainer returns a new Portainer instance
 func NewPortainer() Portainer {
 	// 从配置文件读取这些参数
-	url := viper.GetString("portainer_url") + "/api"
+	//url := viper.GetString("portainer_url") + "/api"
+	// fixme: just for test
+	url :=  "http://ip:9000/api"
+
 	username := viper.GetString("portainer_username")
 	password := viper.GetString("portainer_password")
 

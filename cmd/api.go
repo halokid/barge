@@ -18,6 +18,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	. "github.com/halokid/ColorfulRabbit"
 	"io/ioutil"
 	"net/http"
 )
@@ -45,8 +46,13 @@ func (p Portainer) login() string {
 
 	token := ""
 	url := p.URL + "/auth"
+	//authString := `{"Username": "` + p.username + `", "Password": "` + p.password + `"}`
 
-	authString := `{"Username": "` + p.username + `", "Password": "` + p.password + `"}`
+	// fixme: just for test
+	//url := "http://10.1.1.40:9000/api/auth"
+	authString := `{"Username": "aaaaa", "Password": "aaaaaa"}`
+
+	logx.DebugPrint(authString)
 
 	jsonBlock := []byte(authString)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonBlock))
@@ -54,7 +60,8 @@ func (p Portainer) login() string {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		panic(err)
+		CheckFatal(err, "-------[ERROR] auth")
+		//panic(err)
 	}
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
@@ -62,6 +69,8 @@ func (p Portainer) login() string {
 	_ = json.Unmarshal(body, &data)
 
 	token = data["jwt"].(string)
+	logx.DebugPrint("http code ---------", resp.StatusCode)
+	logx.DebugPrint("token -----------------", token)
 
 	return token
 }
@@ -72,12 +81,14 @@ func (p Portainer) makePublic(resourceType string, id string) bool {
 		"Public":     true,
 		"ResourceID": id,
 	}
-	return p.post(data, "resource_controls")
+	return p.Post(data, "resource_controls")
 }
 
-func (p Portainer) post(data map[string]interface{}, path string) bool {
+func (p Portainer) Post(data map[string]interface{}, path string) bool {
 	bearerHeader := "Bearer " + p.token
 	requestURL := p.URL + "/" + path
+
+	logx.DebugPrint("requestURl --------", requestURL)
 
 	bytesData, err := json.Marshal(data)
 	if err != nil {
@@ -106,5 +117,6 @@ func (p Portainer) post(data map[string]interface{}, path string) bool {
 		return true
 	}
 
+	logx.DebugPrint("Post rsp -----------", string(body))
 	return false
 }
