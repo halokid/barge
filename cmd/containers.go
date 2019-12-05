@@ -110,13 +110,13 @@ func (p *Portainer) CreateCt(eId int, imgName string, cName string, cPort string
 	return bdJs.Get("Id").MustString(), err
 }
 
-func (p *Portainer) StartCt() error {
-	// start container
-	return nil
-}
 
-func startContainer()  {
+func (p *Portainer) StartCt(cId string) bool {
 	// 启动容器
+	data := make(map[string]interface{})
+	path := "endpoints/11/docker/containers/" + cId + "/start"
+	_ = p.Post(data, path)
+	return true
 }
 
 

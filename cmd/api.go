@@ -50,7 +50,7 @@ func (p Portainer) login() string {
 
 	// fixme: just for test
 	//url := "http://10.1.1.40:9000/api/auth"
-	authString := `{"Username": "aaaaa", "Password": "aaaaaa"}`
+	authString := `{"Username": "n", "Password": "@"}`
 
 	logx.DebugPrint(authString)
 
@@ -117,6 +117,6 @@ func (p Portainer) Post(data map[string]interface{}, path string) bool {
 		return true
 	}
 
-	logx.DebugPrint("Post rsp -----------", string(body))
+	logx.DebugPrint("Post rsp -----------", string(body), resp.StatusCode)
 	return false
 }
